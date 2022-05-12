@@ -65,6 +65,6 @@ crashlytics-build.properties
 
 # Left overs
 
-Packages/
-UserSettings/
+Packages/*
+UserSettings/*
 
