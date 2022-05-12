@@ -61,3 +61,10 @@ crashlytics-build.properties
 # VSCode
 
 .vscode/
+
+
+# Left overs
+
+Packages/
+UserSettings/
+
