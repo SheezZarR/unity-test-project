@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D p_rb;
-    private BoxCollider2D p_coll;
-    private SpriteRenderer p_sprite;
-    private Animator p_anim;
-
+    private Rigidbody2D rb;
+    private BoxCollider2D col;
+    private SpriteRenderer sprite;
+    private Animator animator;
+    private Transform tr;
 
     [SerializeField] private LayerMask jumpableGround;
 
     private float dirX = 0f;
     [SerializeField] private float jumpForce = 14f;
     [SerializeField] private float moveSpeed = 7f;
+    private bool is_movingRight = true;
     
 
     private enum MovementState { idle, running, jumping, falling };
@@ -25,22 +26,23 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        p_rb = GetComponent<Rigidbody2D>();
-        p_coll = GetComponent<BoxCollider2D>();
-        p_sprite = GetComponent<SpriteRenderer>();
-        p_anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<BoxCollider2D>();
+        sprite = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        tr = GetComponent<Transform>();
     }
 
     // Update is called once per frame
     void Update()
     {
         dirX = Input.GetAxisRaw("Horizontal");
-        p_rb.velocity = new Vector2(dirX * moveSpeed, p_rb.velocity.y);
+        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
         if (Input.GetButtonDown("Jump") && IsGrounded()) 
         {
             jumpSFX.Play();
-            p_rb.velocity = new Vector3(p_rb.velocity.x, jumpForce, 0);
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
         }
 
         UpdateAnimationState();
@@ -52,33 +54,46 @@ public class PlayerMovement : MonoBehaviour
         if (dirX > 0f) 
         {
             state = MovementState.running;
-            p_sprite.flipX = false;
+            if (!is_movingRight)
+            {
+                Flip();
+            }
+        
         } 
         else if (dirX < 0f) 
         {
             state = MovementState.running;
-            p_sprite.flipX = true;
+            if (is_movingRight)
+            {
+                Flip();
+            }
         }
         else
         {
             state = MovementState.idle;
         }
         
-        if (p_rb.velocity.y > .1f)
+        if (rb.velocity.y > .1f)
         {
             state = MovementState.jumping;
         }
-        else if (p_rb.velocity.y < -.1f) 
+        else if (rb.velocity.y < -.1f) 
         {
             state = MovementState.falling;
         }
 
-        p_anim.SetInteger("state", (int)state);
+        animator.SetInteger("state", (int)state);
+    }
+
+    private void Flip()
+    {
+        is_movingRight = !is_movingRight;
+        tr.Rotate(0, 180f, 0);
     }
 
     private bool IsGrounded() 
     // Creates a smol box which is used to check if there is something beneath the player
     {
-        return Physics2D.BoxCast(p_coll.bounds.center, p_coll.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
+        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
 }
