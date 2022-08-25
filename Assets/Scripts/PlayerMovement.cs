@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private Transform tr;
 
+    private Vector2 ledgePosBot;
+    private Vector2 ledgePos1;
+    private Vector2 ledgePos2;
+
     [SerializeField] private LayerMask jumpableGround;
 
     private int lastWallJumpDirection = 0;
@@ -17,8 +21,9 @@ public class PlayerMovement : MonoBehaviour
     private float jumpTimer;
     private float turnTimer;
     private float wallJumpTimer;
-
+    private float animationTimer = 1f;
     private float dirX = 0f;
+
     [SerializeField] private float jumpForce = 14f;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private int amountOfJumpsLeft;
@@ -31,6 +36,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpTimerSet = 0.15f;
     [SerializeField] private float wallJumpTimerSet = 0.5f;
     [SerializeField] private float turnTimerSet = 0.1f;
+    
+    [SerializeField] private float ledgeClimbXOffset1 = 0f;
+    [SerializeField] private float ledgeClimbYOffset1 = 0f;
+    
+    [SerializeField] private float ledgeClimbXOffset2 = 0f;
+    [SerializeField] private float ledgeClimbYOffset2 = 0f;
+    
 
     private bool isMovingRight = true;
     private bool isGrounded = true;
@@ -38,17 +50,21 @@ public class PlayerMovement : MonoBehaviour
     private bool canWallJump = false;
     private bool canMove;
     private bool canFlip;
+    private bool canClimbLedge = false;
+    private bool ledgeDetected = false;
     private bool hasWallJumped;
+    private bool animationStarted = false;
     private bool isAttemptingToJump;
     private bool isTouchingWall = false;
     private bool isWallSliding = false;
     private bool checkJumpMultiplier;
-  
+    private bool isTouchingLedge = false;
 
-    public Vector2 wallHopDirection;
     public Vector2 wallJumpDirection;
     public int amountOfJumps = 1;
+
     public Transform wallCheck;
+    public Transform ledgeCheck;
 
     private enum MovementState { idle, running, jumping, falling };
     private MovementState state = MovementState.idle;
@@ -66,7 +82,6 @@ public class PlayerMovement : MonoBehaviour
 
         amountOfJumpsLeft = amountOfJumps;
         
-        wallHopDirection.Normalize();
         wallJumpDirection.Normalize();
     }
 
@@ -78,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
         CheckIfCanJump();
         CheckIfWallSliding();
         CheckJump();
+        CheckLedgeClimb();
         UpdateAnimationState();
 
     }
@@ -152,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (!canMove )
+        if (turnTimer >= 0)
         {
             turnTimer -= Time.deltaTime;
 
@@ -174,6 +190,13 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
         isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDisTance, jumpableGround);
+        isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right, wallCheckDisTance, jumpableGround);
+    
+        if (isTouchingWall && !isTouchingLedge && !ledgeDetected)
+        {
+            ledgeDetected = true;
+            ledgePosBot = wallCheck.position;
+        }
     }
 
     private void CheckIfCanJump()
@@ -200,13 +223,71 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckIfWallSliding()
     {
-        if (isTouchingWall && dirX == facingDirection && rb.velocity.y < 0f)
+        if (isTouchingWall && dirX == facingDirection && rb.velocity.y < 0f && !canClimbLedge)
         {
             isWallSliding = true;
         } 
         else
         {
             isWallSliding = false;
+        }
+    }
+
+    public void FinishLedgeClimb()
+    {
+        canClimbLedge = false;
+        transform.position = ledgePos2;
+        canMove = true;
+        canFlip = true;
+        ledgeDetected = false;
+    }
+
+    private void CheckLedgeClimb()
+    {
+        if (ledgeDetected && !canClimbLedge)
+        {
+            canClimbLedge = true;
+
+            if (isMovingRight)
+            {
+                ledgePos1 = new Vector2(Mathf.Floor(ledgePosBot.x + wallCheckDisTance) - ledgeClimbXOffset1, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset1);
+                ledgePos2 = new Vector2(Mathf.Floor(ledgePosBot.x + wallCheckDisTance) + ledgeClimbXOffset2, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset2);
+            } 
+            else
+            {
+                ledgePos1 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDisTance) + ledgeClimbXOffset1, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset1);
+                ledgePos2 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDisTance) - ledgeClimbXOffset2, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset2);
+            }
+
+            Debug.Log(ledgePosBot);
+            Debug.Log(ledgePos1);
+            Debug.Log(ledgePos2);
+
+            canMove = false;
+            canFlip = false;
+
+            animationStarted = true;
+            animationTimer = 0.2f;
+        }
+
+        if (animationTimer >= 0)
+        {
+            animationTimer -= Time.deltaTime;
+        } 
+        else 
+        {
+            if (animationStarted)
+            {
+                FinishLedgeClimb();
+                animationTimer = 0;
+                animationStarted = false;
+            }
+            
+        }
+
+        if (canClimbLedge)
+        {
+            transform.position = ledgePos1;
         }
     }
 
@@ -349,8 +430,8 @@ public class PlayerMovement : MonoBehaviour
         float local_wallJumpXDirection = isMovingRight ? 1f : -1f;
 
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + local_wallCheckDisTance, wallCheck.position.y, wallCheck.position.z));
+        Gizmos.DrawLine(ledgeCheck.position, new Vector3(ledgeCheck.position.x + local_wallCheckDisTance, ledgeCheck.position.y, ledgeCheck.position.z));
 
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(local_wallJumpXDirection, 0.5f, 0));
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(local_wallJumpXDirection, 2f, 0));
     }
 }

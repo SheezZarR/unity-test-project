@@ -18042,10 +18042,14 @@ MonoBehaviour:
   jumpTimerSet: 0.15
   wallJumpTimerSet: 0.5
   turnTimerSet: 0.1
-  wallHopDirection: {x: 1, y: 0.5}
+  ledgeClimbXOffset1: 0.3
+  ledgeClimbYOffset1: 0.1
+  ledgeClimbXOffset2: 0.5
+  ledgeClimbYOffset2: 2.1
   wallJumpDirection: {x: 1, y: 2}
   amountOfJumps: 1
-  wallCheck: {fileID: 1246054546}
+  wallCheck: {fileID: 810912592}
+  ledgeCheck: {fileID: 1246054546}
   jumpSFX: {fileID: 6835999481531282263}
 --- !u!4 &6835999481531282268
 Transform:
