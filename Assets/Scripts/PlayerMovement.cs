@@ -15,8 +15,12 @@ public class PlayerMovement : MonoBehaviour
     private float dirX = 0f;
     [SerializeField] private float jumpForce = 14f;
     [SerializeField] private float moveSpeed = 7f;
-    private bool is_movingRight = true;
+    [SerializeField] private float wallCheckDistance = 0.5f;
     
+    private bool is_movingRight = true;
+    private bool is_touchingWall = false;
+
+    public Transform wallCheck;
 
     private enum MovementState { idle, running, jumping, falling };
     private MovementState state = MovementState.idle;
@@ -38,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
     {
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+
+        CheckSurroundings();
 
         if (Input.GetButtonDown("Jump") && IsGrounded()) 
         {
@@ -85,6 +91,11 @@ public class PlayerMovement : MonoBehaviour
         animator.SetInteger("state", (int)state);
     }
 
+    private void CheckSurroundings()
+    {
+        is_touchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, jumpableGround);
+    }
+
     private void Flip()
     {
         is_movingRight = !is_movingRight;
@@ -95,5 +106,10 @@ public class PlayerMovement : MonoBehaviour
     // Creates a smol box which is used to check if there is something beneath the player
     {
         return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
+    }
+
+    public virtual void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y, wallCheck.position.z));
     }
 }
