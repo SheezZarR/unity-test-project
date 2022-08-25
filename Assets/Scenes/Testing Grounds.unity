@@ -18013,7 +18013,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 6e8c3f94551b2c14998b0810c05b9bee, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &6835999481531282267
 MonoBehaviour:
@@ -18033,14 +18033,15 @@ MonoBehaviour:
   jumpForce: 14
   moveSpeed: 7
   amountOfJumpsLeft: 0
-  wallCheckDistance: 0.5
+  wallCheckDisTance: 0.6
   wallSlideSpeed: 1
-  movementForceInAir: 10
   airDragMultiplier: 1
   variableJumpHeightMultiplier: 0.7
-  wallHopForce: 5
   wallJumpForce: 20
   facingDirection: 1
+  jumpTimerSet: 0.15
+  wallJumpTimerSet: 0.5
+  turnTimerSet: 0.1
   wallHopDirection: {x: 1, y: 0.5}
   wallJumpDirection: {x: 1, y: 2}
   amountOfJumps: 1
