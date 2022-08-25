@@ -632,11 +632,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 838034342298624340, guid: 433c84760c484aa4a93b6c2fc99c12b3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.391
+      value: -2.86
       objectReference: {fileID: 0}
     - target: {fileID: 838034342298624340, guid: 433c84760c484aa4a93b6c2fc99c12b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.35
+      value: -0.99
       objectReference: {fileID: 0}
     - target: {fileID: 838034342298624340, guid: 433c84760c484aa4a93b6c2fc99c12b3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17134,7 +17134,7 @@ PlatformEffector2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927394782}
-  m_Enabled: 1
+  m_Enabled: 0
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
@@ -18010,7 +18010,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6e8c3f94551b2c14998b0810c05b9bee, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -18032,7 +18032,18 @@ MonoBehaviour:
     m_Bits: 64
   jumpForce: 14
   moveSpeed: 7
+  amountOfJumpsLeft: 0
   wallCheckDistance: 0.5
+  wallSlideSpeed: 1
+  movementForceInAir: 10
+  airDragMultiplier: 1
+  variableJumpHeightMultiplier: 0.7
+  wallHopForce: 5
+  wallJumpForce: 20
+  facingDirection: 1
+  wallHopDirection: {x: 1, y: 0.5}
+  wallJumpDirection: {x: 1, y: 2}
+  amountOfJumps: 1
   wallCheck: {fileID: 1246054546}
   jumpSFX: {fileID: 6835999481531282263}
 --- !u!4 &6835999481531282268
@@ -18066,7 +18077,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.02769041, y: -0.27473998}
+  m_Offset: {x: 0.029419899, y: -0.27473998}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -18077,7 +18088,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9477682, y: 1.4086385}
+  m_Size: {x: 0.93180275, y: 1.4086385}
   m_EdgeRadius: 0
 --- !u!1 &6835999481531282270
 GameObject:
