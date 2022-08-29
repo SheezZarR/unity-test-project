@@ -216,6 +216,8 @@ MonoBehaviour:
   whatIsDamagable:
     serializedVersion: 2
     m_Bits: 128
+  inputTimer: 0
+  meleeTimer: 0.25
 --- !u!114 &6835999480798826493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,7 +251,7 @@ MonoBehaviour:
   ledgeClimbYOffset2: 2.1
   dashTime: 0.2
   dashSpeed: 50
-  distanceBetweenImages: 0.1
+  distanceBetweenImages: 0.05
   dashCoolDown: 2.5
   wallJumpDirection: {x: 1, y: 2}
   amountOfJumps: 1

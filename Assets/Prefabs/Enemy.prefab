@@ -168,3 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 173648621676788822, guid: 6d02cd55c2e724c4f9d0a9beef4d3d15, type: 3}
+  damageText: {fileID: 1301331461633938626, guid: f8385eda99e4b344492544ba93d98018, type: 3}
+  health: 100
+  damageTextYOffSet: 1
+  knockbackForceX: 15
+  knockbackForceY: 5

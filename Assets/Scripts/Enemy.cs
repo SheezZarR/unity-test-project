@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private int health = 100;
-    private bool is_facingRight = false;
+    private bool is_facingRight = true;
     private bool is_hit = false;
     private float dirX = 0.0f;
+    // TODO: revisit is_facingRight if statements.
+    private int facingDirection = 1;
 
     private Animator animator;
     private Rigidbody2D rb;
@@ -17,7 +18,10 @@ public class Enemy : MonoBehaviour
     public GameObject deathEffect;
     public GameObject damageText;
 
+    [SerializeField] private int health = 100;
     [SerializeField] private float damageTextYOffSet = 0f;
+    [SerializeField] private float knockbackForceX = 0f;
+    [SerializeField] private float knockbackForceY = 0f;
 
     private enum EnemyState {idle, running, hit};
     private EnemyState state = EnemyState.idle;
@@ -74,6 +78,7 @@ public class Enemy : MonoBehaviour
     private void Flip()
     {
         is_facingRight = !is_facingRight;
+        facingDirection *= -1;
         tr.Rotate(0, 180f, 0);
     }
 
@@ -89,7 +94,16 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             Die();
+        } 
+        else
+        {
+            ApplyKnockback();
         }
+    }
+
+    private void ApplyKnockback()
+    {
+        rb.velocity = new Vector2(knockbackForceX * facingDirection, knockbackForceY);
     }
 
     public void DisableHitState()

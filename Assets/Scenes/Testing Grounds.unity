@@ -591,10 +591,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 838034342298624339, guid: 433c84760c484aa4a93b6c2fc99c12b3, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 60af5b46b785ab845a9a47693726fabc, type: 2}
     - target: {fileID: 838034342298624340, guid: 433c84760c484aa4a93b6c2fc99c12b3, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -646,14 +642,6 @@ PrefabInstance:
     - target: {fileID: 838034342298624342, guid: 433c84760c484aa4a93b6c2fc99c12b3, type: 3}
       propertyPath: m_Layer
       value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8430474128313592195, guid: 433c84760c484aa4a93b6c2fc99c12b3, type: 3}
-      propertyPath: damageText
-      value: 
-      objectReference: {fileID: 1301331461633938626, guid: f8385eda99e4b344492544ba93d98018, type: 3}
-    - target: {fileID: 8430474128313592195, guid: 433c84760c484aa4a93b6c2fc99c12b3, type: 3}
-      propertyPath: damageTextYOffSet
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 433c84760c484aa4a93b6c2fc99c12b3, type: 3}
@@ -17635,14 +17623,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1651371657327310601, guid: b2e0f4985b925cf1eb7f9497e4b8fde4, type: 3}
-      propertyPath: inputTimer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1651371657327310601, guid: b2e0f4985b925cf1eb7f9497e4b8fde4, type: 3}
-      propertyPath: meleeTimer
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 6835999480798826488, guid: b2e0f4985b925cf1eb7f9497e4b8fde4, type: 3}
       propertyPath: m_Name
       value: Player
