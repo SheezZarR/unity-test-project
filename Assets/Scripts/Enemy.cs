@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -14,6 +15,9 @@ public class Enemy : MonoBehaviour
     private Transform tr;
 
     public GameObject deathEffect;
+    public GameObject damageText;
+
+    [SerializeField] private float damageTextYOffSet = 0f;
 
     private enum EnemyState {idle, running, hit};
     private EnemyState state = EnemyState.idle;
@@ -79,6 +83,8 @@ public class Enemy : MonoBehaviour
         UpdateAnimationState();
         
         health -= damage;
+        GameObject damageTxt = Instantiate(damageText, new Vector3(transform.position.x, transform.position.y + damageTextYOffSet, 0f), new Quaternion(0f, 0f, 0f, 0f));
+        damageTxt.transform.GetChild(0).GetComponent<TextMeshPro>().SetText($"-{damage}");
 
         if (health <= 0)
         {
