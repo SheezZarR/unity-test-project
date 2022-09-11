@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ae207aca12d98d443919e6fd4821d982
+guid: 8fd386ca15e7fa644bfceeba1361c125
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hero_idle_short_0
+      name: run 512x512_0
       rect:
         serializedVersion: 2
-        x: 123
-        y: 135
-        width: 304
-        height: 963
+        x: 0
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +130,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd7200c1917c8244489a2e531fef575f
-      internalID: -1963798619
+      spriteID: a5a490f9e111e704588f41fb36dc6e2c
+      internalID: -851375322
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hero_idle_short_1
+      name: run 512x512_1
       rect:
         serializedVersion: 2
-        x: 546
-        y: 135
-        width: 309
-        height: 964
+        x: 512
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -151,20 +151,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e85aa79f7e4dcd469c87d528f091e61
-      internalID: -1610887628
+      spriteID: fc51ac9afc6b1f34aa9dd06185bfdca0
+      internalID: 1764296998
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hero_idle_short_2
+      name: run 512x512_2
       rect:
         serializedVersion: 2
-        x: 971
-        y: 133
-        width: 316
-        height: 968
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,20 +172,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f0d982743baf564bb7e7867f18101c2
-      internalID: 1627592358
+      spriteID: c566f04a8cf65d84bb83e6e4075fe5f9
+      internalID: 854721555
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hero_idle_short_3
+      name: run 512x512_3
       rect:
         serializedVersion: 2
-        x: 1400
-        y: 134
-        width: 320
-        height: 967
+        x: 1536
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +193,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1c095b8641afa74d9f283ad651d6714
-      internalID: -662304145
+      spriteID: 21ad982bfcae9ca4c90144d4dfcb6495
+      internalID: 675397796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hero_idle_short_4
+      name: run 512x512_4
       rect:
         serializedVersion: 2
-        x: 1834
-        y: 133
-        width: 325
-        height: 968
+        x: 2048
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +214,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d384307f5d6d67c4cbf56753de0a6daa
-      internalID: -1689483763
+      spriteID: dbe628e0300679449b942aae235579fe
+      internalID: -878184611
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hero_idle_short_5
+      name: run 512x512_5
       rect:
         serializedVersion: 2
-        x: 2270
-        y: 132
-        width: 330
-        height: 970
+        x: 2560
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,20 +235,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92a04ac817b55aa469140fb6e3b5a63f
-      internalID: -317942236
+      spriteID: 785e2b194e3d97c4693af08f9d2e578f
+      internalID: 398237496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hero_idle_short_6
+      name: run 512x512_6
       rect:
         serializedVersion: 2
-        x: 2710
-        y: 132
-        width: 334
-        height: 972
+        x: 3072
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -256,20 +256,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f249db0f0ea539a4fa4f12565e7dca49
-      internalID: 1555676557
+      spriteID: 3f2f391a615613f4093afa9cc311147e
+      internalID: -802060667
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hero_idle_short_7
+      name: run 512x512_7
       rect:
         serializedVersion: 2
-        x: 3154
-        y: 132
-        width: 334
-        height: 972
+        x: 3584
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -277,20 +277,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a72f63b3e6d71bd4783c2b9825f3d4b4
-      internalID: 1189861117
+      spriteID: 415963f5c0cc9b74d8eac219e4395249
+      internalID: -975441297
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hero_idle_short_8
+      name: run 512x512_8
       rect:
         serializedVersion: 2
-        x: 3600
-        y: 132
-        width: 331
-        height: 969
+        x: 4096
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -298,20 +298,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18dfba5b54c936f42a115bf1d1192eee
-      internalID: 1170785695
+      spriteID: 22984346188aac4418e34c75bda648c3
+      internalID: 1557400893
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hero_idle_short_9
+      name: run 512x512_9
       rect:
         serializedVersion: 2
-        x: 4044
-        y: 134
-        width: 325
-        height: 967
+        x: 4608
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -319,92 +319,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9bbd00a58fd654c4d97cade12210ee06
-      internalID: -80848074
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hero_idle_short_10
-      rect:
-        serializedVersion: 2
-        x: 4485
-        y: 133
-        width: 320
-        height: 968
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8cf6072a6bf3fa74c8aca64814e17c0e
-      internalID: 1918252355
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hero_idle_short_11
-      rect:
-        serializedVersion: 2
-        x: 4923
-        y: 135
-        width: 316
-        height: 966
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4fe14ffce9d02ba45970bcfd5e2f3c98
-      internalID: -1242392162
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hero_idle_short_12
-      rect:
-        serializedVersion: 2
-        x: 5354
-        y: 135
-        width: 313
-        height: 966
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0e04bdbb75ded984f8f12580383a4e45
-      internalID: -872503177
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hero_idle_short_13
-      rect:
-        serializedVersion: 2
-        x: 5786
-        y: 135
-        width: 307
-        height: 963
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1dd4523aa99faf44fb8c286155689155
-      internalID: -1474716479
+      spriteID: e4be55127292efc45b9657abb9e860d5
+      internalID: -185289453
       vertices: []
       indices: 
       edges: []
@@ -412,7 +328,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 05f9b7d62d5737e46b838ffb5f2c574a
     internalID: 0
     vertices: []
     indices: 
@@ -420,20 +336,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      hero_idle_short_7: 1189861117
-      hero_idle_short_3: -662304145
-      hero_idle_short_13: -1474716479
-      hero_idle_short_4: -1689483763
-      hero_idle_short_6: 1555676557
-      hero_idle_short_11: -1242392162
-      hero_idle_short_9: -80848074
-      hero_idle_short_8: 1170785695
-      hero_idle_short_2: 1627592358
-      hero_idle_short_12: -872503177
-      hero_idle_short_10: 1918252355
-      hero_idle_short_5: -317942236
-      hero_idle_short_0: -1963798619
-      hero_idle_short_1: -1610887628
+      run 512x512_5: 398237496
+      run 512x512_4: -878184611
+      run 512x512_8: 1557400893
+      run 512x512_7: -975441297
+      run 512x512_1: 1764296998
+      run 512x512_0: -851375322
+      run 512x512_2: 854721555
+      run 512x512_6: -802060667
+      run 512x512_9: -185289453
+      run 512x512_3: 675397796
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

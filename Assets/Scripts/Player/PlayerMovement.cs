@@ -4,26 +4,32 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private BoxCollider2D col;
-    private SpriteRenderer sprite;
-    private Animator animator;
-    private Transform tr;
-
-    private Vector2 ledgePosBot;
-    private Vector2 ledgePos1;
-    private Vector2 ledgePos2;
-
-    [SerializeField] private LayerMask jumpableGround;
 
     private int lastWallJumpDirection = 0;
+    public int amountOfJumps = 1;
+
+    private bool isMovingRight = true;
+    private bool isGrounded = true;
+    private bool canNormalJump = true;
+    private bool canWallJump = false;
+    private bool canMove;
+    private bool canFlip;
+    private bool canClimbLedge = false;
+    private bool ledgeDetected = false;
+    private bool hasWallJumped;
+    private bool animationStarted = false;
+    private bool isAttemptingToJump;
+    private bool isTouchingWall = false;
+    private bool isWallSliding = false;
+    private bool checkJumpMultiplier;
+    private bool isTouchingLedge = false;
+    private bool isDashing = false;
 
     private float jumpTimer;
     private float turnTimer;
     private float wallJumpTimer;
     private float animationTimer = 1f;
     private float dirX = 0f;
-
     private float dashTimeLeft;
     private float lastImageXPos;
     private float lastDash = -100f;
@@ -43,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField] private float ledgeClimbXOffset1 = 0f;
     [SerializeField] private float ledgeClimbYOffset1 = 0f;
-    
     [SerializeField] private float ledgeClimbXOffset2 = 0f;
     [SerializeField] private float ledgeClimbYOffset2 = 0f;
 
@@ -52,32 +57,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float distanceBetweenImages = 0.1f;
     [SerializeField] private float dashCoolDown = 2.5f;
 
-
-
-    private bool isMovingRight = true;
-    private bool isGrounded = true;
-    private bool canNormalJump = true;
-    private bool canWallJump = false;
-    private bool canMove;
-    private bool canFlip;
-    private bool canClimbLedge = false;
-    private bool ledgeDetected = false;
-    private bool hasWallJumped;
-    private bool animationStarted = false;
-    private bool isAttemptingToJump;
-    private bool isTouchingWall = false;
-    private bool isWallSliding = false;
-    private bool checkJumpMultiplier;
-    private bool isTouchingLedge = false;
-    private bool isDashing = false;
-
     public Vector2 wallJumpDirection;
-    public int amountOfJumps = 1;
+    private Vector2 ledgePosBot;
+    private Vector2 ledgePos1;
+    private Vector2 ledgePos2;
+    
 
     public Transform wallCheck;
     public Transform ledgeCheck;
 
-    private enum MovementState { idle, running, jumping, falling };
+    private Rigidbody2D rb;
+    private BoxCollider2D col;
+    private SpriteRenderer sprite;
+    private Animator animator;
+    private Transform tr;
+
+    [SerializeField] private LayerMask jumpableGround;
+
+    private enum MovementState { idle, running, jumping, falling, wallSliding };
     private MovementState state = MovementState.idle;
 
     [SerializeField] private AudioSource jumpSFX;
@@ -89,7 +86,6 @@ public class PlayerMovement : MonoBehaviour
         col = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        tr = GetComponent<Transform>();
 
         amountOfJumpsLeft = amountOfJumps;
         
@@ -114,6 +110,20 @@ public class PlayerMovement : MonoBehaviour
     {
         ApplyForce();
         CheckSurroundings();
+    }
+
+    public void FinishLedgeClimb()
+    {
+        canClimbLedge = false;
+        transform.position = ledgePos2;
+        canMove = true;
+        canFlip = true;
+        ledgeDetected = false;
+    }
+
+    public int GetFacingDirection()
+    {
+        return facingDirection;
     }
 
     private void UpdateAnimationState()
@@ -146,7 +156,15 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (rb.velocity.y < -.1f)
         {
-            state = MovementState.falling;
+            if (isWallSliding)
+            {
+                state = MovementState.wallSliding;
+            } 
+            else
+            {
+                state = MovementState.falling;
+            }
+            
         }
 
         animator.SetInteger("state", (int)state);
@@ -287,15 +305,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void FinishLedgeClimb()
-    {
-        canClimbLedge = false;
-        transform.position = ledgePos2;
-        canMove = true;
-        canFlip = true;
-        ledgeDetected = false;
-    }
-
     private void CheckLedgeClimb()
     {
         if (ledgeDetected && !canClimbLedge)
@@ -356,16 +365,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
         } 
-        //else if (!isGrounded && !isWallSliding && dirX != 0) // Jump with horizontal input
-        //{
-        //    Vector2 forceToAdd = new Vector2(movementForceInAir * dirX, 0);
-        //    rb.AddForce(forceToAdd);
-
-        //    if (Mathf.Abs(rb.velocity.x) > moveSpeed)
-        //    {
-        //        rb.velocity = new Vector2(moveSpeed * dirX, rb.velocity.y);
-        //    }
-        //} 
         
         if (isWallSliding) // Wall Sliding
         {
@@ -379,10 +378,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckJump()
     {  
+        // Helps with jump spam
         if (jumpTimer > 0)
         {
-            // Wall jump
-
             if (!isGrounded && isTouchingWall && dirX != 0 && dirX != facingDirection)
             {
                 WallJump();
@@ -392,11 +390,13 @@ public class PlayerMovement : MonoBehaviour
                 NormalJump();
             }
         } 
+
         if (isAttemptingToJump)
         {
             jumpTimer -= Time.deltaTime;
         }
 
+        // To avoid walljump spam
         if (wallJumpTimer > 0)
         {
             if (hasWallJumped && dirX == -lastWallJumpDirection)
@@ -413,16 +413,7 @@ public class PlayerMovement : MonoBehaviour
                 wallJumpTimer -= Time.deltaTime;
             }
         }
-        //else if (isWallSliding && dirX == 0 && canJump) // Wall Hop
-        //{
-        //    Debug.Log("Wall Hop");
-        //    isWallSliding = false;
-        //    amountOfJumpsLeft--;
-        //    Vector2 forceAdd = new Vector2(wallHopForce * wallHopDirection.x * -facingDirection, wallHopForce * wallHopDirection.y);
-
-        //    rb.AddForce(forceAdd, ForceMode2D.Impulse);
-        //} 
-         
+          
     }
 
     private void NormalJump()
@@ -462,6 +453,7 @@ public class PlayerMovement : MonoBehaviour
             turnTimer = 0;
             canMove = true;
             canFlip = true;
+
             hasWallJumped = true;
             wallJumpTimer = wallJumpTimerSet;
             lastWallJumpDirection = -facingDirection;
@@ -474,7 +466,7 @@ public class PlayerMovement : MonoBehaviour
         {
             facingDirection *= -1;
             isMovingRight = !isMovingRight;
-            tr.Rotate(0, 180f, 0);
+            transform.Rotate(0, 180f, 0);
         }
     }
 

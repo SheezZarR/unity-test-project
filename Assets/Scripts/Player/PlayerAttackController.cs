@@ -24,9 +24,11 @@ public class PlayerAttackController : MonoBehaviour
     private float lastMeleeTime = Mathf.NegativeInfinity;
     [SerializeField] private float meleeTimer = 0f;
 
+    private PlayerMovement playerController;
+
     private void Start()
     {
-        
+        playerController = gameObject.GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,16 @@ public class PlayerAttackController : MonoBehaviour
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
     }
 
+    private void MeleeAttack()
+    {
+        isMeleeAttacking = true;
+        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(meleeAttackHitBoxPos.position, meleeAtackRadius, whatIsDamagable);
+
+        foreach (Collider2D collider in detectedObjects)
+        {
+            collider.gameObject.SendMessage("Damage", new DamageDetails(meleeAtackDamage, playerController.GetFacingDirection()));
+        }
+    }
 
     private void CheckCombatInput()
     {
@@ -58,23 +70,6 @@ public class PlayerAttackController : MonoBehaviour
         {
             lastMeleeTime -= Time.deltaTime;
         } 
-        else
-        {
-            isMeleeAttacking = false;
-        }
-    }
-
-
-    private void MeleeAttack()
-    {
-        isMeleeAttacking = true;
-        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(meleeAttackHitBoxPos.position, meleeAtackRadius, whatIsDamagable);
-        
-
-        foreach (Collider2D collider in detectedObjects)
-        {
-            collider.gameObject.SendMessage("TakeDamage", meleeAtackDamage);
-        }
     }
 
     private void OnDrawGizmos()

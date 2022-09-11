@@ -5,15 +5,23 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private bool is_facingRight = true;
-    private bool is_hit = false;
+    private bool isFacingRight = true;
+    private bool isHit = false;
+    private bool wallDetected;
+    private bool groundDetected;
+
+    private float groundCheckDistance;
+    private float wallCheckDistance;
     private float dirX = 0.0f;
-    // TODO: revisit is_facingRight if statements.
+    
+    // TODO: revisit isFacingRight if statements.
     private int facingDirection = 1;
 
     private Animator animator;
     private Rigidbody2D rb;
     private Transform tr;
+    private Transform groundCheck;
+    private Transform wallCheck;
 
     public GameObject deathEffect;
     public GameObject damageText;
@@ -37,9 +45,9 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Some wandering mechanic
+        
         dirX = -rb.velocity.x;
-        //
+        
         UpdateAnimationState();
 
     }
@@ -47,23 +55,23 @@ public class Enemy : MonoBehaviour
     private void UpdateAnimationState()
     {
 
-        if (is_hit)
+        if (isHit)
         {
             state = EnemyState.hit;
         } 
-        else if (dirX > 0f)
+        else if (dirX > 0.0f)
         {
             state = EnemyState.running;
-            if (!is_facingRight)
+            if (!isFacingRight)
             {
                 Flip();
             }
 
         }
-        else if (dirX < 0f)
+        else if (dirX < 0.0f)
         {
             state = EnemyState.running;
-            if (is_facingRight)
+            if (isFacingRight)
             {
                 Flip();
             }
@@ -77,19 +85,19 @@ public class Enemy : MonoBehaviour
     }
     private void Flip()
     {
-        is_facingRight = !is_facingRight;
+        isFacingRight = !isFacingRight;
         facingDirection *= -1;
         tr.Rotate(0, 180f, 0);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(DamageDetails details)
     {
-        is_hit = true;
+        isHit = true; 
         UpdateAnimationState();
         
-        health -= damage;
+        health -= details.damage;
         GameObject damageTxt = Instantiate(damageText, new Vector3(transform.position.x, transform.position.y + damageTextYOffSet, 0f), new Quaternion(0f, 0f, 0f, 0f));
-        damageTxt.transform.GetChild(0).GetComponent<TextMeshPro>().SetText($"-{damage}");
+        damageTxt.transform.GetChild(0).GetComponent<TextMeshPro>().SetText($"-{details.damage}");
 
         if (health <= 0)
         {
@@ -97,18 +105,18 @@ public class Enemy : MonoBehaviour
         } 
         else
         {
-            ApplyKnockback();
+            ApplyKnockback(details.incomingDirection);
         }
     }
 
-    private void ApplyKnockback()
+    private void ApplyKnockback(int incomingDirection)
     {
-        rb.velocity = new Vector2(knockbackForceX * facingDirection, knockbackForceY);
+        rb.velocity = new Vector2(knockbackForceX * incomingDirection, knockbackForceY);
     }
 
     public void DisableHitState()
     {
-        is_hit = false;
+        isHit = false;
     }
 
     void Die()
